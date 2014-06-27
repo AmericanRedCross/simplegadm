@@ -28,7 +28,7 @@ Each application needs certain dependencies and plug-ins. Using a package manage
 
 *These processes are stable but computationally heavy. An Amazon EC2 server was used for the big number crunching.
 
-```
+---
 
 #**Instructions**
 
@@ -83,14 +83,12 @@ Mac:
 $ brew install git
 ```
 
-Clone PPRepair from Git
-
+Clone PPRepair from Git:
 ```
 $ git clone https://github.com/tudelft-gist/pprepair.git
 ```
 
 Each time you run PPRepair, you must follow these steps:
-
 ```
 $ cmake .
 $ make
@@ -135,33 +133,29 @@ Linux:
 ```
 $ sudo apt-get install nodejs
 ```
-
 Mac:		
 ```
 $ brew install nodejs
 ```
 
 Install MapShaper:
-
 ```
 $ npm install -g mapshaper
 ```
 
 Dissolve the shapefile:
-
 ```
 $ mapshaper --dissolve cat boundariesFromGRASS.shp
 ```
 
 Join original attributes:
-
 ```
 $ mapshaper --join boundariesFromGRASS.dbf --join-keys cat,cat dissolvedBoundariesFromGRASS.shp
 ```
 
 5. Run PPRepair (see above directions)
 
-```
+---
 
 ##**Convert Encoding:**
 
@@ -174,7 +168,7 @@ Preserving the encoding of the text attributes is needed if the text is being us
 *Select shapefile for data type and then select a new encoding in the pull-down menu (eg. UTF-8).
 *Save shapefile.
 
-```
+---
 
 ##**Simplify:**
 
@@ -189,7 +183,7 @@ $ mapshaper --keep-shapes -p 0.5 gadm_level.shp -o simp_gadm_level.shp
  [IMAGE]
 
 
-```
+---
 
 ##**Build the Stack:**
 
@@ -198,7 +192,6 @@ $ mapshaper --keep-shapes -p 0.5 gadm_level.shp -o simp_gadm_level.shp
 Here we will dissolve the same file multiple times to get each stack level.
 
 For GADM, there are six stack layers:
-
 ```
 $ mapshaper --dissolve ID_0 --copy-fields ID_0,NAME_0 france.shp
 
@@ -219,6 +212,8 @@ $ mapshaper --expression “CAT=(NAME_0+NAME_1+NAME_2+NAME_3+NAME_4+NAME_5)" --f
 
 ###PostGIS Input
 
+Install PostGIS:
+
 Linux
 ```
 sudo apt-get install postgis
@@ -228,16 +223,17 @@ Mac
 brew install postgis
 ```
 
+Create and enable database:
 ```
 $ createdb gadm_v2
 $ psql gadm_v2
 ```
-
 ```
 # create extension postgis;
 # \q
 ```
 
+Import the Shapefile:
 ```
-shp2pgsql ………
+$ shp2pgsql -I -s 4326 france_gadm0.shp france_gadm0 | psql -d gadm_v2
 ```
