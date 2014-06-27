@@ -1,10 +1,10 @@
 #**Simple GADM**
 
-This is the step-by-step method American Red Cross (ARC) GIS used to build a topologically-correct simplified administrative boundary stack based on GADM v. 2. Using basic simplification tools didn’t work (PostGIS’s ST_Simplify, ST_SimplifyPreserveTopology, QGIS’s Simplify geometries) due to topological errors in the original data.
+This is the step-by-step method American Red Cross (ARC) GIS used to build a topologically-correct simplified administrative boundary stack based on GADM v. 2. This was developed to provide global administrative boundaries for the world so that we can run database queries on a specific boundary levels that are appropriate for the analysis.
 
 ![alt text](/images/world.png)
 
-To prepare the data the topology was corrected, encoding converted, simplified while preserving topology, and then dissolved into separate layers. The software is open-source, stable, and scalable.
+Using basic simplification tools didn’t work (PostGIS’s ST_Simplify, ST_SimplifyPreserveTopology, QGIS’s Simplify geometries) due to topological errors in the original data. To prepare the data for the stack the topology was corrected, encoding converted, simplified while preserving topology, and then dissolved into separate layers. The software is open-source, stable, and scalable.
 
 All methods were implemented with Mac OS X and Ubuntu 14.04 Trusty Tahr.
 The software used:
@@ -25,7 +25,7 @@ Each application needs certain dependencies and plug-ins. Using a package manage
 
 ##**Topology Correction:**
 
-We used the [GADM v. 2 boundaries](http://www.gadm.org) from UC Davis for our administrative boundary stack. Simplifying the original dataset caused a loss of a features due to encoding and numerous topology errors due to poor initial topology.
+We used the [GADM v. 2 boundaries](http://www.gadm.org) from UC Davis for our administrative boundary stack. Simplifying the original dataset caused a loss of features due to encoding and numerous topology errors due to poor initial topology.
 
 Original and simplified France Admin 2 without topology correction:
 
@@ -45,11 +45,11 @@ The following method can also be implemented with NaturalEarth and other boundar
 
 ###Check Topology
 
-* Load your administrative boundaries into QGIS
+* Load the administrative boundaries into QGIS
 * Download TopologyChecker Plugin
 * Setup TopologyChecker:
   * Click Configure
-  * Select your boundaries and the topological relationships you want to check (overlaps, gaps, and invalid geometries are recommended)
+  * Select your boundaries and the topological relationships you want to check (overlaps, gaps, and invalid geometries are recommended- FYI checking gaps can sometimes freeze up QGIS)
 
 ---
 
@@ -232,18 +232,15 @@ $ mapshaper --dissolve ID_0 --copy-fields ID_0,NAME_0 france.shp
 
 $ mapshaper --expression "CAT=(NAME_0+NAME_1)" --filter "$.partCount>0" --dissolve CAT --copy-fields ID_0,NAME_0,ID_1,NAME_1 france.shp
 
-$ mapshaper --expression "CAT=(NAME_0+NAME_1+NAME_2)" --filter "$.partCount>0" --dissolve CAT --copy-fields ID_0,NAME_0,ID_1,NAME_1,ID_2,NAME_2 france.shp
+$ mapshaper --expression "CAT=(NAME_0+NAME_1+NAME_2)" --dissolve CAT --copy-fields ID_0,NAME_0,ID_1,NAME_1,ID_2,NAME_2 france.shp
 
-$ mapshaper --expression "CAT=(NAME_0+NAME_1+NAME_2+NAME_3)" --filter "$.partCount>0" --dissolve CAT --copy-fields ID_0,NAME_0,ID_1,NAME_1,ID_2,NAME_2,ID_3,NAME_3 france.shp
+$ mapshaper --expression "CAT=(NAME_0+NAME_1+NAME_2+NAME_3)" --dissolve CAT --copy-fields ID_0,NAME_0,ID_1,NAME_1,ID_2,NAME_2,ID_3,NAME_3 france.shp
 
-$ mapshaper --expression "CAT=(NAME_0+NAME_1+NAME_2+NAME_3+NAME_4)" --filter "$.partCount>0" --dissolve CAT --copy-fields ID_0,NAME_0,ID_1,NAME_1,ID_2,NAME_2,ID_3,NAME_3,ID_4,NAME_4 france.shp
+$ mapshaper --expression "CAT=(NAME_0+NAME_1+NAME_2+NAME_3+NAME_4)" --dissolve CAT --copy-fields ID_0,NAME_0,ID_1,NAME_1,ID_2,NAME_2,ID_3,NAME_3,ID_4,NAME_4 france.shp
 
-$ mapshaper --expression “CAT=(NAME_0+NAME_1+NAME_2+NAME_3+NAME_4+NAME_5)" --filter "$.partCount>0" --dissolve CAT --copy-fields ID_0,NAME_0,ID_1,NAME_1,ID_2,NAME_2,ID_3,NAME_3,ID_4,NAME_4,ID_5,NAME_5 france.shp
+$ mapshaper --expression “CAT=(NAME_0+NAME_1+NAME_2+NAME_3+NAME_4+NAME_5)" --dissolve CAT --copy-fields ID_0,NAME_0,ID_1,NAME_1,ID_2,NAME_2,ID_3,NAME_3,ID_4,NAME_4,ID_5,NAME_5 france.shp
 ```
 
-
-
-—filter “ID_4 !== null”
 
 ###PostGIS Input
 
