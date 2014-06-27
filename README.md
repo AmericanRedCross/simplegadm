@@ -2,7 +2,7 @@
 
 This is the step-by-step method American Red Cross (ARC) GIS used to build a topologically-correct simplified administrative boundary stack based on GADM v. 2. Using basic simplification tools didn’t work (PostGIS’s ST_Simplify, ST_SimplifyPreserveTopology, QGIS’s Simplify geometries) due to topological errors in the original data.
 
-[IMAGE]
+![alt text](/images/world.png)
 
 To prepare the data the topology was corrected, encoding converted, simplified while preserving topology, and then dissolved into separate layers. The software is open-source, stable, and scalable.
 
@@ -107,6 +107,7 @@ For larger datasets, or ones with errors difficult for PPRepair to handle, GRASS
 ---
 
 ![alt text](/images/pprepair_corsica-2-01.png)
+
 Two errors are highlighted that PPRepair didn't fix. When coupled with GRASS, the errors were fixed.
 
 ---
@@ -198,10 +199,11 @@ The following example maintains small shapes and reduces the entire file to half
 ```
 $ mapshaper --keep-shapes -p 0.5 gadm_level.shp -o simp_gadm_level.shp
 ```
+`
+Original and simplified France Admin 2 geometries with all the errors corrected:
 
 ---
 
-Original and simplified France Admin 2 geometries with all the errors corrected:
 ![alt text](/images/clean_topo.png)
 Original without errors
 
