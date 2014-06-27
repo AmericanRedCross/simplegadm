@@ -28,10 +28,18 @@ Each application needs certain dependencies and plug-ins. Using a package manage
 We used the [GADM v. 2 boundaries](http://www.gadm.org) from UC Davis for our administrative boundary stack. Simplifying the original dataset caused a loss of a features due to encoding and numerous topology errors due to poor initial topology.
 
 Original and simplified France Admin 2 without topology correction:
+
+---
+
 ![alt text](/images/original.png)
 Original geometries, dissolved for the stack
+
+---
+
 ![alt text](/images/bad_simp.png)
 Original simplification (without topological considerations)
+
+---
 
 The following method can also be implemented with NaturalEarth and other boundary datasets for alternatives within the ARC boundary database.
 
@@ -43,9 +51,12 @@ The following method can also be implemented with NaturalEarth and other boundar
   * Click Configure
   * Select your boundaries and the topological relationships you want to check (overlaps, gaps, and invalid geometries are recommended)
 
+---
 
 ![alt text](/images/topochecker.png)
 GADM v. 2 has 90,259 overlaps. France has 641; errors in red from TopologyChecker:
+
+---
 
 ###Fix Topology
 
@@ -93,8 +104,12 @@ Check the boundary data with TopologyChecker. If there are errors, check the err
 
 For larger datasets, or ones with errors difficult for PPRepair to handle, GRASS is very helpful in understanding the extent of the errors and correcting some of them. GRASS uses a topologic data model, and tries to correct errors at the import with an automated snapping tool. It can introduce artifacts if used exclusively to correct errors. The artifacts are consistent with its own data model but not with shapefiles. Using PPRepair to correct these errors after using GRASS is necessary.
 
-![alt text](/images/pprepair_corsica-01.png =150x237)
+---
+
+![alt text](/images/pprepair_corsica-2-01.png)
 Two errors are highlighted that PPRepair didn't fix. When coupled with GRASS, the errors were fixed.
+
+---
 
 ####GRASS
 
@@ -117,8 +132,12 @@ Two errors are highlighted that PPRepair didn't fix. When coupled with GRASS, th
 
    * Select shapefile output data format
 
+---
+
 ![alt text](/images/grass_out1-01.png)
 GRASS menu and v.out.ogr window.
+
+---
 
 * Dissolve into multipolygons and join attributes:
 
@@ -180,13 +199,16 @@ The following example maintains small shapes and reduces the entire file to half
 $ mapshaper --keep-shapes -p 0.5 gadm_level.shp -o simp_gadm_level.shp
 ```
 
+---
+
 Original and simplified France Admin 2 geometries with all the errors corrected:
 ![alt text](/images/clean_topo.png)
 Original without errors
+
+---
+
 ![alt text](/images/simplified.png)
 Simplified without errors
-
-
 
 ---
 
