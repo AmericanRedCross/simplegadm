@@ -1,10 +1,3 @@
-[simple_wrong]
-[simple_correct]
-[topo_errors]
-[grass_plugin]
-[grass_v.out.ogr1]
-[grass_v.out.ogr2]
-
 #**Simple GADM**
 
 This is the step-by-step method American Red Cross (ARC) GIS used to build a topologically-correct simplified administrative boundary stack based on GADM v. 2. Using basic simplification tools didn’t work (PostGIS’s ST_Simplify, ST_SimplifyPreserveTopology, QGIS’s Simplify geometries) due to topological errors in the original data.
@@ -34,11 +27,10 @@ Each application needs certain dependencies and plug-ins. Using a package manage
 
 We used the [GADM v. 2 boundaries](http://www.gadm.org) from UC Davis for our administrative boundary stack. Simplifying the original dataset caused a loss of a features due to encoding and numerous topology errors due to poor initial topology.
 
-Here are original and simplified France Admin 2 () without any topology correction:
+![alt text](/images/originals.png)
+Original and simplified France Admin 2 without topology correction
 
-[IMAGE]
-
-The following method can also be implemented with NaturalEarth and other boundary datasets for alternatives within the ARC database [???].
+The following method can also be implemented with NaturalEarth and other boundary datasets for alternatives within the ARC boundary database.
 
 ###Check Topology
 
@@ -49,8 +41,7 @@ The following method can also be implemented with NaturalEarth and other boundar
   * Select your boundaries and the topological relationships you want to check (overlaps, gaps, and invalid geometries are recommended)
 
 
-[IMAGE]
-
+![alt text](/images/topochecker.png)
 GADM v. 2 has 90,259 overlaps. France has 641; errors in red from TopologyChecker:
 
 ###Fix Topology
@@ -99,7 +90,7 @@ Check the boundary data with TopologyChecker. If there are errors, check the err
 
 For larger datasets, or ones with errors difficult for PPRepair to handle, GRASS is very helpful in understanding the extent of the errors and correcting some of them. GRASS uses a topologic data model, and tries to correct errors at the import with an automated snapping tool. It can introduce artifacts if used exclusively to correct errors. The artifacts are consistent with its own data model but not with shapefiles. Using PPRepair to correct these errors after using GRASS is necessary.
 
-[IMAGE]
+![alt text](/images/pprepair_corsica-01.png)
 Two errors are highlighted that PPRepair didn't fix. When coupled with GRASS, the errors were fixed.
 
 ####GRASS
