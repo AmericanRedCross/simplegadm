@@ -24,9 +24,9 @@ The software used:
 
 Each application needs certain dependencies and plug-ins. Using a package manager like Homebrew or apt-get helps with proper installation.
 
-###Note
-
-* These processes are stable but computationally heavy. An Amazon EC2 server was used for the big number crunching.
+>###Note
+>
+>These processes are stable but computationally heavy. An Amazon EC2 server was used for the big >number crunching.
 
 #**Instructions**
 
@@ -181,7 +181,7 @@ Preserving the encoding of the text attributes is needed if the text is being us
 
 Load your shapefile into www.mapshaper.org to visually simplify or use the command-line tool installed earlier to power through it much faster.
 
-The following example maintains small shapes and reduces the entire file to half its original size. Full documentation for MapShaper is available on GitHub.
+The following example maintains small shapes and reduces the entire file to half its original size. [Full documentation](https://github.com/mbloch/mapshaper/wiki/Command-Reference) for MapShaper is available on GitHub.
 
 ```
 $ mapshaper --keep-shapes -p 0.5 gadm_level.shp -o simp_gadm_level.shp
@@ -197,7 +197,7 @@ The Admin 2 geometries for France with all the errors corrected and the boundari
 
 ###MapShaper Dissolve
 
-Here we will dissolve the same file multiple times to get each stack level.
+Here we will dissolve the same file multiple times to get each stack level. In order to run the MapShaper dissolve, first the geometries for each stack layer need to be separated. For example, if a country has Admin boundaries up to level 4, then be careful not to include it in the level 5 dissolve. This is easiest to do by removing the NULL values for each level before each dissolve.
 
 For GADM, there are six stack layers:
 
