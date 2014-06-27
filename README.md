@@ -100,13 +100,18 @@ $ make
 $ ./pprepair -i ~/Desktop/GADM/gadm2.shp -o ~/Desktop/GADM/gadm2_ppr_output.shp -fix
 ```
 
-Check the boundary data with TopologyChecker. If there are errors, check the error locations in the original dataset, hand-edit the offending geometry, and re-run PPRepair. Sometimes iteratively correcting the topology is necessary.
+Check the boundary data with TopologyChecker. If there are still errors, there are two options to correct them:
+1. Correct by hand
+* Edit the geometries and fix the errors that still exist by hand
+* It's usually a good idea to re-run PPRepair to perfectly fit the boundaries
 
-For larger datasets, or ones with errors difficult for PPRepair to handle, GRASS is very helpful in understanding the extent of the errors and correcting some of them. GRASS uses a topologic data model, and tries to correct errors at the import with an automated snapping tool. It can introduce artifacts if used exclusively to correct errors. The artifacts are consistent with its own data model but not with shapefiles. Using PPRepair to correct these errors after using GRASS is necessary.
+2. Use GRASS
+* For larger datasets with lots of errors that PPRepair can't fix (like GADM) GRASS is very helpful in understanding the extent of the errors and correcting some of them. GRASS uses a topologic data model, and tries to correct errors at the import with an automated snapping tool. It's a simple process so it's not the best tool to use exclusively for topological correction.  
+  *The output from GRASS sometimes contains other errors (invalid geometries) that are consistent with its own data model but not with shapefiles. Using PPRepair to correct these errors after using GRASS is necessary.
 
 ---
 
-![alt text](/images/pprepair_corsica-2-01.png)
+![alt text](/images/pprepair_corsica-01-01.png)
 
 Two errors are highlighted that PPRepair didn't fix. When coupled with GRASS, the errors were fixed.
 
@@ -127,7 +132,7 @@ Two errors are highlighted that PPRepair didn't fix. When coupled with GRASS, th
 
       * Snapping set to -1 (for no snapping)  
       OR  
-      Set Snapping to an extremely low number (1E-13) to snap some, but not all, the errors. After an initial import with no snapping, the process output suggests a low threshold - this is a good starting point. A longer discussion of the reasons behind thresholding the snapping error correction can be found here.
+      Set Snapping to an extremely low number (1E-13) to snap some, but not all, the errors. After an initial import with no snapping, the process output suggests a low threshold - this is a good starting point. A longer discussion of the reasons behind thresholding the snapping error correction can be found [here](/tutorial_draft/GADM_Correction_Doc.pdf) (PDF of tutorial rough draft).
 
 * Export boundary data with v.out.ogr
 
