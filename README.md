@@ -223,22 +223,22 @@ Simplified without errors
 
 ###MapShaper Dissolve
 
-Here we will dissolve the same file multiple times to get each stack level. In order to run the MapShaper dissolve, first the geometries for each stack layer need to be separated. For example, if a country has Admin boundaries up to level 4, then be careful not to include it in the level 5 dissolve. This is easiest to do by removing the NULL values for each level before each dissolve.
+Here we will dissolve the same file multiple times to get each stack level.
 
 For GADM, there are six stack layers:
 
 ```
 $ mapshaper --dissolve ID_0 --copy-fields ID_0,NAME_0 france.shp
 
-$ mapshaper --expression "CAT=(NAME_0+NAME_1)" --filter "$.partCount>0" --dissolve CAT --copy-fields ID_0,NAME_0,ID_1,NAME_1 france.shp
+$ mapshaper -filter "ID_1>0" --expression "CAT=(NAME_0+NAME_1)" --filter "$.partCount>0" --dissolve CAT --copy-fields ID_0,NAME_0,ID_1,NAME_1 france.shp
 
-$ mapshaper --expression "CAT=(NAME_0+NAME_1+NAME_2)" --dissolve CAT --copy-fields ID_0,NAME_0,ID_1,NAME_1,ID_2,NAME_2 france.shp
+$ mapshaper -filter "ID_2>0" --expression "CAT=(NAME_0+NAME_1+NAME_2)" --dissolve CAT --copy-fields ID_0,NAME_0,ID_1,NAME_1,ID_2,NAME_2 france.shp
 
-$ mapshaper --expression "CAT=(NAME_0+NAME_1+NAME_2+NAME_3)" --dissolve CAT --copy-fields ID_0,NAME_0,ID_1,NAME_1,ID_2,NAME_2,ID_3,NAME_3 france.shp
+$ mapshaper -filter "ID_3>0" --expression "CAT=(NAME_0+NAME_1+NAME_2+NAME_3)" --dissolve CAT --copy-fields ID_0,NAME_0,ID_1,NAME_1,ID_2,NAME_2,ID_3,NAME_3 france.shp
 
-$ mapshaper --expression "CAT=(NAME_0+NAME_1+NAME_2+NAME_3+NAME_4)" --dissolve CAT --copy-fields ID_0,NAME_0,ID_1,NAME_1,ID_2,NAME_2,ID_3,NAME_3,ID_4,NAME_4 france.shp
+$ mapshaper -filter "ID_4>0" --expression "CAT=(NAME_0+NAME_1+NAME_2+NAME_3+NAME_4)" --dissolve CAT --copy-fields ID_0,NAME_0,ID_1,NAME_1,ID_2,NAME_2,ID_3,NAME_3,ID_4,NAME_4 france.shp
 
-$ mapshaper --expression “CAT=(NAME_0+NAME_1+NAME_2+NAME_3+NAME_4+NAME_5)" --dissolve CAT --copy-fields ID_0,NAME_0,ID_1,NAME_1,ID_2,NAME_2,ID_3,NAME_3,ID_4,NAME_4,ID_5,NAME_5 france.shp
+$ mapshaper --filter "ID_5>0" --expression “CAT=(NAME_0+NAME_1+NAME_2+NAME_3+NAME_4+NAME_5)" --dissolve CAT --copy-fields ID_0,NAME_0,ID_1,NAME_1,ID_2,NAME_2,ID_3,NAME_3,ID_4,NAME_4,ID_5,NAME_5 france.shp
 ```
 
 
