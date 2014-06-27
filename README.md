@@ -7,11 +7,11 @@
 
 #**Simple GADM**
 
-This is the step-by-step method American Red Cross (ARC) GIS used to build a topologically-correct simplified administrative boundary stack (based on GADM v. 2). Using basic simplification tools didn’t work (PostGIS’s ST_Simplify, ST_SimplifyPreserveTopology, QGIS’s Simplify geometries) due to topological errors in the original data.
+This is the step-by-step method American Red Cross (ARC) GIS used to build a topologically-correct simplified administrative boundary stack based on GADM v. 2. Using basic simplification tools didn’t work (PostGIS’s ST_Simplify, ST_SimplifyPreserveTopology, QGIS’s Simplify geometries) due to topological errors in the original data.
 
 [IMAGE]
 
-To prepare the data the topology is corrected, encoding converted, simplified while preserving topology, and then dissolved into separate layers. The software is open-source, stable, scalable.
+To prepare the data the topology was corrected, encoding converted, simplified while preserving topology, and then dissolved into separate layers. The software is open-source, stable, and scalable.
 
 All methods were implemented with Mac OS X and Ubuntu 14.04 Trusty Tahr.
 The software used:
@@ -28,14 +28,11 @@ Each application needs certain dependencies and plug-ins. Using a package manage
 
 * These processes are stable but computationally heavy. An Amazon EC2 server was used for the big number crunching.
 
-
----
-
 #**Instructions**
 
 ##**Topology Correction:**
 
-We used the GADM v. 2 boundaries from UC Davis for our administrative boundary stack. Simplifying the original dataset caused a loss of a features due to encoding and numerous topology errors due to poor initial topology.
+We used the [GADM v. 2 boundaries](http://www.gadm.org) from UC Davis for our administrative boundary stack. Simplifying the original dataset caused a loss of a features due to encoding and numerous topology errors due to poor initial topology.
 
 Here are original and simplified France Admin 2 () without any topology correction:
 
@@ -110,7 +107,7 @@ Two errors are highlighted that PPRepair didn't fix. When coupled with GRASS, th
 
 1. Load GRASS (easiest to use through the QGIS Plugin)
 
-[IMAGE]
+![alt text](/images/grass_menu-01.png)
 
 2. Import boundary data with v.in.ogr
 
@@ -126,8 +123,9 @@ Two errors are highlighted that PPRepair didn't fix. When coupled with GRASS, th
 
    * Select shapefile output data format
 
-[IMAGES]
-Menu of GRASS and v.out.ogr window.
+![alt text](/images/grass_out1-01.png)
+![alt text](/images/grass_out2-01.png)
+GRASS menu and v.out.ogr window.
 
 4. Dissolve into multipolygons and join attributes:
 
