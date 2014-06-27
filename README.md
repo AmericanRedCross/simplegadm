@@ -19,7 +19,7 @@ Each application needs certain dependencies and plug-ins. Using a package manage
 
 >###Note
 >
->These processes are stable but computationally heavy. An Amazon EC2 server was used for the big >number crunching.
+>These processes are stable but computationally heavy. An Amazon EC2 server was used for the big number crunching.
 
 #**Instructions**
 
@@ -27,8 +27,11 @@ Each application needs certain dependencies and plug-ins. Using a package manage
 
 We used the [GADM v. 2 boundaries](http://www.gadm.org) from UC Davis for our administrative boundary stack. Simplifying the original dataset caused a loss of a features due to encoding and numerous topology errors due to poor initial topology.
 
-![alt text](/images/originals.png)
-Original and simplified France Admin 2 without topology correction
+Original and simplified France Admin 2 without topology correction:
+![alt text](/images/original.png)
+Original geometries, dissolved for the stack
+![alt text](/images/bad_simp.png)
+Original simplification (without topological considerations)
 
 The following method can also be implemented with NaturalEarth and other boundary datasets for alternatives within the ARC boundary database.
 
@@ -90,35 +93,34 @@ Check the boundary data with TopologyChecker. If there are errors, check the err
 
 For larger datasets, or ones with errors difficult for PPRepair to handle, GRASS is very helpful in understanding the extent of the errors and correcting some of them. GRASS uses a topologic data model, and tries to correct errors at the import with an automated snapping tool. It can introduce artifacts if used exclusively to correct errors. The artifacts are consistent with its own data model but not with shapefiles. Using PPRepair to correct these errors after using GRASS is necessary.
 
-![alt text](/images/pprepair_corsica-01.png)
+![alt text](/images/pprepair_corsica-01.png =150x237)
 Two errors are highlighted that PPRepair didn't fix. When coupled with GRASS, the errors were fixed.
 
 ####GRASS
 
 
-1. Load GRASS (easiest to use through the QGIS Plugin)
+* Load GRASS (easiest to use through the QGIS Plugin)
 
 ![alt text](/images/grass_menu-01.png)
 
-2. Import boundary data with v.in.ogr
+* Import boundary data with v.in.ogr
 
-* Select import thresholds:
+   * Select import thresholds:
 
-   * Minimun Area set to 0
+      * Minimun Area set to 0
 
-   * Snapping set to -1 (for no snapping)
-   OR
-   Set Snapping to an extremely low number (1E-13) to snap some, but not all, the errors. After an initial import with no snapping, the process output suggests a low threshold - this is a good starting point. A longer discussion of the reasons behind thresholding the snapping error correction can be found here.
+      * Snapping set to -1 (for no snapping)  
+      OR  
+      Set Snapping to an extremely low number (1E-13) to snap some, but not all, the errors. After an initial import with no snapping, the process output suggests a low threshold - this is a good starting point. A longer discussion of the reasons behind thresholding the snapping error correction can be found here.
 
-3. Export boundary data with v.out.ogr
+* Export boundary data with v.out.ogr
 
    * Select shapefile output data format
 
 ![alt text](/images/grass_out1-01.png)
-![alt text](/images/grass_out2-01.png)
 GRASS menu and v.out.ogr window.
 
-4. Dissolve into multipolygons and join attributes:
+* Dissolve into multipolygons and join attributes:
 
   * GRASS breaks multipart features into separate features, and it tags each feature with an ID value (cat) that designates the original multipart source feature. Use this value to dissolve the data. This can be done in ArcGIS, but we used MapShaper.
 
@@ -149,7 +151,7 @@ Join original attributes:
 $ mapshaper --join boundariesFromGRASS.dbf --join-keys cat,cat dissolvedBoundariesFromGRASS.shp
 ```
 
-5. Run PPRepair (see above directions)
+* Run PPRepair (see above directions)
 
 
 ---
@@ -178,8 +180,12 @@ The following example maintains small shapes and reduces the entire file to half
 $ mapshaper --keep-shapes -p 0.5 gadm_level.shp -o simp_gadm_level.shp
 ```
 
-[IMAGE]
-The Admin 2 geometries for France with all the errors corrected and the boundaries simplified.
+Original and simplified France Admin 2 geometries with all the errors corrected:
+![alt text](/images/clean_topo.png)
+Original without errors
+![alt text](/images/simplified.png)
+Simplified without errors
+
 
 
 ---
