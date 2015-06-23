@@ -101,13 +101,13 @@ $ ./pprepair -i ~/Desktop/GADM/gadm2.shp -o ~/Desktop/GADM/gadm2_ppr_output.shp 
 ```
 
 Check the boundary data with TopologyChecker. If there are still errors, there are two options to correct them:
-1. Correct by hand
-* Edit the geometries and fix the errors that still exist by hand
-* It's usually a good idea to re-run PPRepair to perfectly fit the boundaries
 
+1. Correct by hand
+  * Edit the geometries and fix the errors that still exist by hand
+  * It's usually a good idea to re-run PPRepair to perfectly fit the boundaries
 2. Use GRASS
-* For larger datasets with lots of errors that PPRepair can't fix (like GADM) GRASS is very helpful in understanding the extent of the errors and correcting some of them. GRASS uses a topologic data model, and tries to correct errors at the import with an automated snapping tool. It's a simple process so it's not the best tool to use exclusively for topological correction.  
-  *The output from GRASS sometimes contains other errors (invalid geometries) that are consistent with its own data model but not with shapefiles. Using PPRepair to correct these errors after using GRASS is necessary.
+  * For larger datasets with lots of errors that PPRepair can't fix (like GADM) GRASS is very helpful in understanding the extent of the errors and correcting some of them. GRASS uses a topologic data model, and tries to correct errors at the import with an automated snapping tool. It's a simple process so it's not the best tool to use exclusively for topological correction.
+  * *The output from GRASS sometimes contains other errors (invalid geometries) that are consistent with its own data model but not with shapefiles. Using PPRepair to correct these errors after using GRASS is necessary.
 
 ---
 
